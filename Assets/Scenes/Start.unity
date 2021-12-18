@@ -193,9 +193,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Name
+  m_Text: 'Matthew North
 
-    Student Number'
+    100754902'
 --- !u!222 &592369443
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -509,15 +509,15 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1954064649}
-        m_TargetAssemblyTypeName: Start_Button, Assembly-CSharp
-        m_MethodName: OnClickStart
-        m_Mode: 1
+        m_TargetAssemblyTypeName: HUDManager, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Loading
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1954064647
@@ -567,9 +567,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1954064644}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0190aa163f386464fb19687f7d25d564, type: 3}
+  m_Script: {fileID: 11500000, guid: c73a30e80c840b94ea6b6dc92d28b864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mobileHUD: {fileID: 0}
+  leftJoystick: {fileID: 0}
+  rightJoystick: {fileID: 0}
+  menuHUD: {fileID: 0}
+  roomHUD: {fileID: 0}
+  inGame: 0
+  CursorLocked: 0
+  mobileMode: 0
 --- !u!1 &2018209727
 GameObject:
   m_ObjectHideFlags: 0
