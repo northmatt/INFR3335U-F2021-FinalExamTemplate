@@ -16,6 +16,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks {
     }
 
     public override void OnJoinedLobby() {
+        PhotonNetwork.NickName = "Player " + Random.Range(0, 100).ToString("000");
         SceneManager.LoadScene(lobbySceneName);
     }
 }

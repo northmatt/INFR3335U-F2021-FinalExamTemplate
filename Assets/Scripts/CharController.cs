@@ -31,7 +31,7 @@ public class CharController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
-		if (hudManager == null || !hudManager.CursorLocked)
+		if (hudManager == null || hudManager.paused || !hudManager.CursorLocked && !hudManager.mobileMode)
 			return;
 
         //Store input from each update to be considered for fixed updates

@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 public class HUDManager : MonoBehaviour {
     public GameObject mobileHUD;
+    public GameObject pauseHUD;
     public Joystick leftJoystick;
     public Joystick rightJoystick;
-    public GameObject menuHUD;
-    public GameObject roomHUD;
     public bool inGame = false;
+    public bool paused = false;
     public bool CursorLocked = false;
     public bool mobileMode = false;
 
@@ -25,33 +26,31 @@ public class HUDManager : MonoBehaviour {
                 mobileMode = false;
                 break;
         }
-        SetupHUD();
+        CursorHidden(inGame);
+
+        if (inGame) {
+            DoPause(false);
+        }
     }
 
     // Update is called once per frame
     void Update() {
-        if (CursorLocked && !mobileMode && inGame && Input.GetKeyDown(KeyCode.Escape)) {
+        /*if (CursorLocked && !mobileMode && inGame && Input.GetKeyDown(KeyCode.Escape)) {
             CursorHidden(false);
         }
 
         if (!CursorLocked && !mobileMode && inGame && Input.GetMouseButton(0)) {
             CursorHidden(true);
         }
-
+        
         if (mobileMode && Input.GetKeyDown("k") || !mobileMode && CursorLocked && Input.GetKeyDown("k")) {
             mobileMode = !mobileMode;
             SetupHUD();
+        }*/
+
+        if (inGame && Input.GetKeyDown(KeyCode.Escape)) {
+            DoPause(!paused);
         }
-    }
-
-    void SetupHUD() {
-        CursorHidden(false);
-
-        if (!inGame)
-            return;
-
-        mobileHUD.SetActive(mobileMode);
-        CursorLocked = mobileMode;
     }
 
     void CursorHidden(bool isHidden) {
@@ -60,7 +59,39 @@ public class HUDManager : MonoBehaviour {
         Cursor.visible = !CursorLocked;
     }
 
+    public void DoPause(bool isPaused) {
+        paused = isPaused;
+        pauseHUD.SetActive(paused);
+        mobileHUD.SetActive(paused ? false : mobileMode);
+        CursorHidden(paused ? false : !mobileMode);
+    }
+
+    public void DoMobile() {
+        mobileMode = !mobileMode;
+    }
+
+    public void DoFullscreen() {
+        Screen.fullScreen = !Screen.fullScreen;
+    }
+
     public void LoadScene(string sceneName) {
+        if (inGame) {
+            StartCoroutine(DoSwitchScene(sceneName));
+            return;
+        }
+
         SceneManager.LoadScene(sceneName);
+    }
+
+    IEnumerator DoSwitchScene(string sceneNumber) {
+        PhotonNetwork.Disconnect();
+        while (PhotonNetwork.IsConnected)
+            yield return null;
+
+        SceneManager.LoadScene(sceneNumber);
+    }
+
+    public void ExitApplication() {
+        Application.Quit();
     }
 }

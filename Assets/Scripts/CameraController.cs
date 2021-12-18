@@ -25,7 +25,10 @@ public class CameraController : MonoBehaviour {
 
     // LateUpdate is called once per frame at the end of everything
     void LateUpdate() {
-        if (hudManager.CursorLocked) {
+        if (following == null)
+            return;
+
+        if (!hudManager.paused || hudManager.CursorLocked && !hudManager.mobileMode) {
             Vector2 rotInp = Vector2.zero;
             if (hudManager.mobileMode)
                 rotInp = hudManager.rightJoystick.Direction;
